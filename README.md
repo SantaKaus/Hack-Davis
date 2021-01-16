@@ -1,3 +1,3 @@
 # Hack-Davis
 
-<a link to our video>
+a link to our video
