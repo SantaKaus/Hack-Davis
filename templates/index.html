@@ -89,12 +89,17 @@
 
     //var movies = [{ name: 'Avengers' }, { name: 'Bee Movie' }, { name: 'Borat' }];
     var movieCollection = "";
+    console.log(typeof movies);
     for (i = 0; i < 3; i++) { //parsedResult.length for the array 
       for (j = 0; j < 3; j++) {
+        console.log((movies).length);
+        console.log(movies[i][1][j][0]);
+        console.log(movies[i][1][j][3]);
+        console.log(movies[i][1][j][2]);
         let block = '<div class="col-sm-4">' +
           '<div class="panel panel-primary">' +
           '<div id="temptitle" class="panel-heading">' + movies[i][1][j][0] + '</div>' +
-          '<div class="panel-body"><img src="https://www.themoviedb.org/t/p/w188_and_h282_bestv2/' + movies[i][1][j][3] + '" class="img-responsive"' +
+          // '<div class="panel-body"><img src="https://www.themoviedb.org/t/p/w188_and_h282_bestv2/' + movies[i][1][j][3] + '" class="img-responsive"' +
           'style="width:100%" alt="Image"></div>' +
           '<div class="panel-footer">' + movies[i][1][j][2] + '</div>' +
           '<div class="panel-footer">PETITION LINKS</div>' +

@@ -31,15 +31,18 @@ def weather(city):
     #return weather_at_place.get_reception_time()      
 
 
-returnList = [
-["Hot pockets recalled for possible glass, plastic contamination | TheHill - The Hill",
-[['Vanguard', '2020-09-30', "Covert security company Vanguard is the last hope of survival for an accountant after he is targeted by the world's deadliest mercenary organization.", '/vYvppZMvXYheYTWVd8Rnn9nsmNp.jpg'], ["Dory's Reef Cam", '2020-12-18', 'Dive into the waters below and watch the aquatic wildlife from the world of Nemo and Dory.', '/mMWLGu9pFymqipN8yvISHsAaj72.jpg'], ['Lupin', '2021-01-08', 'Inspired by the adventures of Arsène Lupin, gentleman thief Assane Diop sets out to avenge his father for an injustice inflicted by a wealthy family.', '/sgxawbFB5Vi5OkPWQLNfl3dvkNJ.jpg']]],
-["Nets 122, Magic 115: James Harden Posts Triple-Double in Brooklyn Debut | Brooklyn Nets - Brooklynnets.com",
-[["Dory's Reef Cam", '2020-12-18', 'Dive into the waters below and watch the aquatic wildlife from the world of Nemo and Dory.', '/mMWLGu9pFymqipN8yvISHsAaj72.jpg'], ['Vanguard', '2020-09-30', "Covert security company Vanguard is the last hope of survival for an accountant after he is targeted by the world's deadliest mercenary organization.", '/vYvppZMvXYheYTWVd8Rnn9nsmNp.jpg'], ['Equinox', '2020-12-30', 'Haunted by visions after her sister vanished with her classmates 21 years before, Astrid begins an investigation that uncovers the dark, eerie truth.', '/bnU3Rz3nR844WZNOyrCk8W52DUs.jpg']]],
-["Ga. lawyer, mother of ‘zip-tie guy’ charged in Capitol riot - Atlanta Journal Constitution",
-[['Vanguard', '2020-09-30', "Covert security company Vanguard is the last hope of survival for an accountant after he is targeted by the world's deadliest mercenary organization.", '/vYvppZMvXYheYTWVd8Rnn9nsmNp.jpg'], ['Lupin', '2021-01-08', 'Inspired by the adventures of Arsène Lupin, gentleman thief Assane Diop sets out to avenge his father for an injustice inflicted by a wealthy family.', '/sgxawbFB5Vi5OkPWQLNfl3dvkNJ.jpg'], ["Dory's Reef Cam", '2020-12-18', 'Dive into the waters below and watch the aquatic wildlife from the world of Nemo and Dory.', '/mMWLGu9pFymqipN8yvISHsAaj72.jpg']]]
-]
-def algorithm():
+# returnList = [
+# ["Hot pockets recalled for possible glass, plastic contamination | TheHill - The Hill",
+# [['Vanguard', '2020-09-30', "Covert security company Vanguard is the last hope of survival for an accountant after he is targeted by the world's deadliest mercenary organization.", '/vYvppZMvXYheYTWVd8Rnn9nsmNp.jpg'], ["Dory's Reef Cam", '2020-12-18', 'Dive into the waters below and watch the aquatic wildlife from the world of Nemo and Dory.', '/mMWLGu9pFymqipN8yvISHsAaj72.jpg'], ['Lupin', '2021-01-08', 'Inspired by the adventures of Arsène Lupin, gentleman thief Assane Diop sets out to avenge his father for an injustice inflicted by a wealthy family.', '/sgxawbFB5Vi5OkPWQLNfl3dvkNJ.jpg']]],
+# ["Nets 122, Magic 115: James Harden Posts Triple-Double in Brooklyn Debut | Brooklyn Nets - Brooklynnets.com",
+# [["Dory's Reef Cam", '2020-12-18', 'Dive into the waters below and watch the aquatic wildlife from the world of Nemo and Dory.', '/mMWLGu9pFymqipN8yvISHsAaj72.jpg'], ['Vanguard', '2020-09-30', "Covert security company Vanguard is the last hope of survival for an accountant after he is targeted by the world's deadliest mercenary organization.", '/vYvppZMvXYheYTWVd8Rnn9nsmNp.jpg'], ['Equinox', '2020-12-30', 'Haunted by visions after her sister vanished with her classmates 21 years before, Astrid begins an investigation that uncovers the dark, eerie truth.', '/bnU3Rz3nR844WZNOyrCk8W52DUs.jpg']]],
+# ["Ga. lawyer, mother of ‘zip-tie guy’ charged in Capitol riot - Atlanta Journal Constitution",
+# [['Vanguard', '2020-09-30', "Covert security company Vanguard is the last hope of survival for an accountant after he is targeted by the world's deadliest mercenary organization.", '/vYvppZMvXYheYTWVd8Rnn9nsmNp.jpg'], ['Lupin', '2021-01-08', 'Inspired by the adventures of Arsène Lupin, gentleman thief Assane Diop sets out to avenge his father for an injustice inflicted by a wealthy family.', '/sgxawbFB5Vi5OkPWQLNfl3dvkNJ.jpg'], ["Dory's Reef Cam", '2020-12-18', 'Dive into the waters below and watch the aquatic wildlife from the world of Nemo and Dory.', '/mMWLGu9pFymqipN8yvISHsAaj72.jpg']]]
+# ]
+# def algorithm():
+
+@app.route('/movies') #split function in 2 pieces, one to split and json the other part to time loop/background jobs 
+def movies():
     OMDBAPIKey = "778e5667"
     APIKey = "e20e035943ec00333eb2a1d09ea93a5c"
     NewsAPIKey = "e585b7de092d4ccbbe055c71425b5dca"
@@ -116,7 +119,10 @@ def algorithm():
         three = tmdb_testing_texts_ids[indices.flatten()[3]]
         final_list.append([x["title"], [one, two, three]])
         tmdb_testing_texts.pop()
-        returnList = final_list
+    print("length of final list ", len(final_list[0]))
+    # returnList = final_list
+    return jsonify(final_list)
+
     #count = 0 debug
     # for i in final_list:
     #     print("News Article #", count)
@@ -127,11 +133,11 @@ def algorithm():
     #         n += 1
     # print("end")
     # return jsonify(final_list)
-algorithm()
+# algorithm()
 
-@app.route('/movies') #split function in 2 pieces, one to split and json the other part to time loop/background jobs 
-def movies():
-    return jsonify(returnList)
+# @app.route('/movies') #split function in 2 pieces, one to split and json the other part to time loop/background jobs 
+# def movies():
+    # return jsonify(returnList)
 
 if __name__ == "__main__":
     app.run(debug=True)
