@@ -32,6 +32,10 @@
     height: 100px;
   }
 
+  img {
+    cursor: pointer;
+  }
+
   .panel-heading {
     text-align: center;
     color: #4040a1;
@@ -44,19 +48,13 @@
     border-color: #4040a1;
   }
 
-
-  /* .timer {}
-
-  .panel-heading {
-    text-align: center;
+  .panel-primary {
+    border-color: #4040a1;
   }
 
-  .panel-footer {
-    font-family: Garamond;
+  .panel-body {
+    border-color: #4040a1;
   }
-  #temptile{
-    
-  } */
 </style>
 {% endblock %}
 
@@ -130,7 +128,8 @@
     //var movies = [{ name: 'Avengers' }, { name: 'Bee Movie' }, { name: 'Borat' }];
     var movieCollection = "";
     console.log(typeof movies);
-    for (i = 0; i < 3; i++) { //parsedResult.length for the array 
+    for (i = 0; i < 3; i++) { //parsedResult.length for the array
+      movieCollection += '<div class="row">'
       for (j = 0; j < 3; j++) {
         console.log((movies).length);
         console.log(movies[i][1][j][0]);
@@ -140,15 +139,24 @@
           '<div class="panel panel-primary">' +
           '<div id="temptitle" class="panel-heading">' + movies[i][1][j][0] + '</div>' +
           '<div class="panel-body"><img src="https://www.themoviedb.org/t/p/w188_and_h282_bestv2/' + movies[i][1][j][3] + '" class="img-responsive"' +
-          'style="width:100%" alt="Image"></div>' +
+          'style="width:100%" alt=' + "https://www.google.com" + ' onclick="linktopetition(this)"></div>' + //add link from image here!
           '<div class="panel-footer">' + movies[i][1][j][2] + '</div>' +
           '</div>' +
           '</div>';
         movieCollection += block;
+
       }
+      movieCollection += '</div>'
     }
     document.querySelector('#movieResults').innerHTML = movieCollection;
     console.log(movieCollection);
+  }
+
+  function linktopetition(img) {
+    var href = img.alt;
+    console.log(img.alt)
+    window.open(href);
+    // window.open("http://www.google.com");
   }
 
 </script>
@@ -156,26 +164,28 @@
   <div class="row">
     <div id="movieResults">
 
-    </div>
+      <!-- </div>
     {% for news_item in news %}
     <div class="col-sm-4">
       <div class="panel panel-primary">
         <div class="panel-heading">CATEGORY</div>
         <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"
-            style="width:100%" alt="Image"></div>
+            style="width:100%" alt="Image" ></div>
         <div class="panel-footer">Title of the content</div>
       </div>
     </div>
     {% endfor %}
 
-  </div>
-</div><br>
-<!-- <footer class="container-fluid text-center">
-        <p>Online Store Copyright</p>  
-        <form class="form-inline">Get deals:
-        <input type="email" class="form-control" size="50" placeholder="Email Address">
-        <button type="button" class="btn btn-danger">Sign Up</button>
-        </form>
-    </footer> -->
+  </div> -->
+    </div><br>
+    <footer style="background-color:#4040a1;" class="container-fluid text-center">
+      <p style="font-family: 'Mukta', sans-serif; font-size: 18px; color:white; padding-top: 10px ">-Giraffe HackDavis
+        2021-
+      </p>
+      <!-- <form class="form-inline">Get deals:
+    <input type="email" class="form-control" size="50" placeholder="Email Address">
+    <button type="button" class="btn btn-danger">Sign Up</button>
+  </form> -->
+    </footer>
 
-{% endblock %}
+    {% endblock %}
