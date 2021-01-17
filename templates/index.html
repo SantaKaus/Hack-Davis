@@ -15,11 +15,18 @@
     margin-bottom: 40;
   }
 
-  /* Add a gray background color and some padding to the footer 
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }*/
+  /* .timer {}
+
+  .panel-heading {
+    text-align: center;
+  }
+
+  .panel-footer {
+    font-family: Garamond;
+  }
+  #temptile{
+    
+  } */
 </style>
 {% endblock %}
 
@@ -28,41 +35,44 @@
   <div class="container text-center">
     <h2>Latest Movies Based on Current Events!</h1>
       <p>Stayed Tuned for the Next Update</p>
-      <p id="demo"></p>
-      <script>
-        // Set the date we're counting down to
-        var countDownDate = new Date("Jan 5, 2022 15:00:00").getTime();
+      <h2 class=timer id="demo">
+        </p>
+        <script>
+          // Set the date we're counting down to
+          var countDownDate = new Date("Jan 5, 2022 15:00:00").getTime();
 
-        // Update the count down every 1 second
-        var x = setInterval(function () {
+          // Update the count down every 1 second
+          var x = setInterval(function () {
 
-          // Get today's date and time
-          var now = new Date().getTime();
+            // Get today's date and time
+            var now = new Date().getTime();
 
-          // Find the distance between now and the count down date
-          var distance = countDownDate - now;
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
 
-          // Time calculations for days, hours, minutes and seconds
-          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-          // Output the result in an element with id="demo"
-          document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+            // Output the result in an element with id="demo"
+            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
 
-          // If the count down is over, write some text 
-          if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
-          }
-        }, 1000);
-      </script>
+            // If the count down is over, write some text 
+            if (distance < 0) {
+              clearInterval(x);
+              document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+          }, 1000);
+        </script>
   </div>
 </div>
 <script>
   function load() {
-    fetch('http://127.0.0.1:5000/weather/boston').then(response => {
+
+
+    fetch('http://127.0.0.1:5000/movies').then(response => {
       return response.json(); //makes result into json format
     }).then(parsedResponse => {
       console.log(parsedResponse); //inject this into HTML 
@@ -75,22 +85,23 @@
     load();
   });
 
-  function renderTiles(parsedResponse) {
+  function renderTiles(movies) {
 
-    var movies = [{ name: 'Avengers' }, { name: 'Bee Movie' }, { name: 'Borat' }];
+    //var movies = [{ name: 'Avengers' }, { name: 'Bee Movie' }, { name: 'Borat' }];
     var movieCollection = "";
-    for (i = 0; i < movies.length; i++) { //parsedResult.length for the array 
-
-      let block = '<div class="col-sm-4">' +
-        '<div class="panel panel-primary">' +
-        '<div id="temptitle" class="panel-heading">' + movies[i]['name'] + '</div>' +
-        '<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"' +
-        'style="width:100%" alt="Image"></div>' +
-        '<div class="panel-footer">Description</div>' +
-        '<div class="panel-footer">PETITION LINKS</div>' +
-        '</div>' +
-        '</div>';
-      movieCollection += block;
+    for (i = 0; i < 3; i++) { //parsedResult.length for the array 
+      for (j = 0; j < 3; j++) {
+        let block = '<div class="col-sm-4">' +
+          '<div class="panel panel-primary">' +
+          '<div id="temptitle" class="panel-heading">' + movies[i][1][j][0] + '</div>' +
+          '<div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"' +
+          'style="width:100%" alt="Image"></div>' +
+          '<div class="panel-footer">' + movies[i][1][j][2] + '</div>' +
+          '<div class="panel-footer">PETITION LINKS</div>' +
+          '</div>' +
+          '</div>';
+        movieCollection += block;
+      }
     }
     document.querySelector('#movieResults').innerHTML = movieCollection;
     console.log(movieCollection);
@@ -115,59 +126,6 @@
 
   </div>
 </div><br>
-<!--  
-    <div class="container">    
-        <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-primary">
-            <div class="panel-heading">BLACK FRIDAY DEAL</div>
-            <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-            </div>
-        </div>
-        <div class="col-sm-4"> 
-            <div class="panel panel-primary">
-            <div class="panel-heading">BLACK FRIDAY DEAL</div>
-            <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-            </div>
-        </div>
-        <div class="col-sm-4"> 
-            <div class="panel panel-primary">
-            <div class="panel-heading">BLACK FRIDAY DEAL</div>
-            <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-            </div>
-        </div>
-        </div>
-    </div><br>
-
-    <div class="container">    
-        <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-primary">
-            <div class="panel-heading">BLACK FRIDAY DEAL</div>
-            <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-            </div>
-        </div>
-        <div class="col-sm-4"> 
-            <div class="panel panel-primary">
-            <div class="panel-heading">BLACK FRIDAY DEAL</div>
-            <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-            </div>
-        </div>
-        <div class="col-sm-4"> 
-            <div class="panel panel-primary">
-            <div class="panel-heading">BLACK FRIDAY DEAL</div>
-            <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-            <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-            </div>
-        </div>
-        </div>
-    </div><br><br><br>
--->
 <!-- <footer class="container-fluid text-center">
         <p>Online Store Copyright</p>  
         <form class="form-inline">Get deals:
