@@ -9,11 +9,41 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato&family=Mukta:wght@500&display=swap" rel="stylesheet">
 <style>
   /* Remove the jumbotron's default bottom margin */
   .jumbotron {
     margin-bottom: 40;
+    /* new things */
+    padding: 60px;
+    text-align: center;
+    background: #7B68EE;
+    color: white;
+    font-size: 30px;
+    font-family: 'Mukta', sans-serif;
   }
+
+  #jumbotronText {
+    border-radius: 30px;
+    background: #4040a1;
+    padding: 0px;
+    width: 800px;
+    height: 100px;
+  }
+
+  .panel-heading {
+    text-align: center;
+    color: #4040a1;
+    font-family: 'Mukta', sans-serif;
+  }
+
+  .panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #4040a1;
+    border-color: #4040a1;
+  }
+
 
   /* .timer {}
 
@@ -32,8 +62,8 @@
 
 {% block body %}
 <div class="jumbotron">
-  <div class="container text-center">
-    <h2>Latest Movies Based on Current Events!</h1>
+  <div id="jumbotronText" class="container text-center">
+    <h2>Latest Petitions Based on Current Events!</h1>
       <p>Stayed Tuned for the Next Update</p>
       <h2 class=timer id="demo">
         </p>
@@ -87,6 +117,16 @@
 
   function renderTiles(movies) {
 
+    // ['On Inauguration Day, What Message Will Biden Try To Deliver - NPR', 
+    // ['All-Virtual Inauguration 2021', 'Remove Senator Ben Sasse from republican party.', 'reinstate ms\u200b.\u200bcasserly', 'Traffic Safety for UF Students', 'Sign this if you believe LGBTQ+ quotes should be allowed in the kennedy year book', 'Governor Pritzker Veto Illinois HB 3653']
+    // ]]
+
+    // //[News article title, [petition name, description, ?]]
+
+    // ['Powerball results for 01/16/21; did anyone win the $640M jackpot? - MLive.com', 
+    // ['All-Virtual Inauguration 2021', 'Sign this if you believe LGBTQ+ quotes should be allowed in the kennedy year book', 'Traffic Safety for UF Students', 'reinstate ms\u200b.\u200bcasserly', 'Remove Senator Ben Sasse from republican party.', 'Keep Senator Josh Hawley']
+    // ]
+
     //var movies = [{ name: 'Avengers' }, { name: 'Bee Movie' }, { name: 'Borat' }];
     var movieCollection = "";
     console.log(typeof movies);
@@ -99,10 +139,9 @@
         let block = '<div class="col-sm-4">' +
           '<div class="panel panel-primary">' +
           '<div id="temptitle" class="panel-heading">' + movies[i][1][j][0] + '</div>' +
-          // '<div class="panel-body"><img src="https://www.themoviedb.org/t/p/w188_and_h282_bestv2/' + movies[i][1][j][3] + '" class="img-responsive"' +
+          '<div class="panel-body"><img src="https://www.themoviedb.org/t/p/w188_and_h282_bestv2/' + movies[i][1][j][3] + '" class="img-responsive"' +
           'style="width:100%" alt="Image"></div>' +
           '<div class="panel-footer">' + movies[i][1][j][2] + '</div>' +
-          '<div class="panel-footer">PETITION LINKS</div>' +
           '</div>' +
           '</div>';
         movieCollection += block;
