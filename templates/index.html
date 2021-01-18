@@ -107,7 +107,7 @@
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+            minutes = minutes % 5;
             // Output the result in an element with id="demo"
             document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
 
@@ -136,23 +136,20 @@
   });
   setInterval(() => { load(); }, 60 * 1 * 1000)
 
-
+  let count = 0;
   function renderTiles(petitions) {
     let petitionCollection = "";
     let petitionList = [];
-    let count = 0;
+    let petitionArticles = [];
     //console.log(typeof petitions);
     for (i = 0; i < 3; i++) { //parsedResult.length for the array
       petitionCollection += '<div class="row">'
       for (j = 0; j < 3; j++) {
-        //console.log("title", petitions[count][1][0][0]);
-        //console.log("link", petitions[count][1][0][1]);
-        //console.log("image", petitions[count][1][0][2]);
-        //console.log("new article", petitions[count][0]);
-        while (petitionList.includes(petitions[count][1][0]) || petitions[count][1][2].localeCompare('https://static.change.org/profile-img/default-user-profile.svg') == 0) {
+        while (petitionList.includes(petitions[count][1][0]) || petitions[count][1][2].localeCompare('https://static.change.org/profile-img/default-user-profile.svg') == 0 || petitionArticles.includes(petitions[count][0])) {
           count++;
         }
         petitionList.push(petitions[count][1][0][0]); //add the petition title to array to avoid repeats 
+        petitionArticles.push(petitions[count][0]);
         arr = petitions[count][0].split(' - ');
         article = arr[0];
         source = arr[1];
