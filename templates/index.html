@@ -11,6 +11,8 @@
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Lato&family=Mukta:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
 <style>
   /* Remove the jumbotron's default bottom margin */
   .jumbotron {
@@ -40,6 +42,9 @@
     text-align: center;
     color: #4040a1;
     font-family: 'Mukta', sans-serif;
+    font-size: 125%;
+    border-color: #4040a1;
+    border-width: 10px;
   }
 
   .panel-primary>.panel-heading {
@@ -48,12 +53,31 @@
     border-color: #4040a1;
   }
 
+  .panel-body {
+    background: #7B68EE;
+    border-color: #4040a1;
+    border-width: 30px;
+  }
+
+  .panel-footer {
+    text-align: center;
+    border-radius: 20px;
+  }
+
   .panel-primary {
     border-color: #4040a1;
+    border-width: 10px;
+    border-radius: 20px;
   }
 
   .panel-body {
     border-color: #4040a1;
+
+  }
+
+  .news {
+    font-size: 150%;
+    font-family: 'Merriweather', serif;
   }
 </style>
 {% endblock %}
@@ -100,92 +124,70 @@
   function load() {
 
 
-    fetch('http://127.0.0.1:5000/movies').then(response => {
+    fetch('http://127.0.0.1:5000/petitions').then(response => {
       return response.json(); //makes result into json format
     }).then(parsedResponse => {
       console.log(parsedResponse); //inject this into HTML 
-      //document.querySelector('#temptitle').innerHTML = parsedResponse.temp;
-      //$('#temptitle').innerText('reached here')
       renderTiles(parsedResponse);
     })
   }
   window.addEventListener('load', (event) => {
     load();
   });
+  setInterval(() => { load(); }, 60 * 1 * 1000)
 
-  function renderTiles(movies) {
 
-    // ['On Inauguration Day, What Message Will Biden Try To Deliver - NPR', 
-    // ['All-Virtual Inauguration 2021', 'Remove Senator Ben Sasse from republican party.', 'reinstate ms\u200b.\u200bcasserly', 'Traffic Safety for UF Students', 'Sign this if you believe LGBTQ+ quotes should be allowed in the kennedy year book', 'Governor Pritzker Veto Illinois HB 3653']
-    // ]]
-
-    // //[News article title, [petition name, description, ?]]
-
-    // ['Powerball results for 01/16/21; did anyone win the $640M jackpot? - MLive.com', 
-    // ['All-Virtual Inauguration 2021', 'Sign this if you believe LGBTQ+ quotes should be allowed in the kennedy year book', 'Traffic Safety for UF Students', 'reinstate ms\u200b.\u200bcasserly', 'Remove Senator Ben Sasse from republican party.', 'Keep Senator Josh Hawley']
-    // ]
-
-    //var movies = [{ name: 'Avengers' }, { name: 'Bee Movie' }, { name: 'Borat' }];
-    var movieCollection = "";
-    console.log(typeof movies);
+  function renderTiles(petitions) {
+    let petitionCollection = "";
+    let petitionList = [];
+    let count = 0;
+    //console.log(typeof petitions);
     for (i = 0; i < 3; i++) { //parsedResult.length for the array
-      movieCollection += '<div class="row">'
+      petitionCollection += '<div class="row">'
       for (j = 0; j < 3; j++) {
-        console.log((movies).length);
-        console.log(movies[i][1][j][0]);
-        console.log(movies[i][1][j][3]);
-        console.log(movies[i][1][j][2]);
+        //console.log("title", petitions[count][1][0][0]);
+        //console.log("link", petitions[count][1][0][1]);
+        //console.log("image", petitions[count][1][0][2]);
+        //console.log("new article", petitions[count][0]);
+        while (petitionList.includes(petitions[count][1][0]) || petitions[count][1][2].localeCompare('https://static.change.org/profile-img/default-user-profile.svg') == 0) {
+          count++;
+        }
+        petitionList.push(petitions[count][1][0][0]); //add the petition title to array to avoid repeats 
+        arr = petitions[count][0].split(' - ');
+        article = arr[0];
+        source = arr[1];
+
         let block = '<div class="col-sm-4">' +
           '<div class="panel panel-primary">' +
-          '<div id="temptitle" class="panel-heading">' + movies[i][1][j][0] + '</div>' +
-          '<div class="panel-body"><img src="https://www.themoviedb.org/t/p/w188_and_h282_bestv2/' + movies[i][1][j][3] + '" class="img-responsive"' +
-          'style="width:100%" alt=' + "https://www.google.com" + ' onclick="linktopetition(this)"></div>' + //add link from image here!
-          '<div class="panel-footer">' + movies[i][1][j][2] + '</div>' +
+          '<div class="panel-footer">' + '<span class = "news">' + source + '</span><br>' + article + '</div>' +
+          '<div class="panel-body"><img src="' + petitions[count][1][2] + '"" class="img-responsive"' +
+          'style="width:100%" alt="' + petitions[count][1][1] + '" onclick="linktopetition(this)"></div>' + //add link from image here
+          '<div id="temptitle" class="panel-heading">' + petitions[count][1][0] + '</div>' +
           '</div>' +
           '</div>';
-        movieCollection += block;
-
+        petitionCollection += block;
+        count++;
       }
-      movieCollection += '</div>'
+      petitionCollection += '</div>'
     }
-    document.querySelector('#movieResults').innerHTML = movieCollection;
-    console.log(movieCollection);
+    document.querySelector('#movieResults').innerHTML = petitionCollection;
   }
 
   function linktopetition(img) {
     var href = img.alt;
     console.log(img.alt)
     window.open(href);
-    // window.open("http://www.google.com");
   }
 
 </script>
 <div class="container">
   <div class="row">
     <div id="movieResults">
-
-      <!-- </div>
-    {% for news_item in news %}
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">CATEGORY</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive"
-            style="width:100%" alt="Image" ></div>
-        <div class="panel-footer">Title of the content</div>
-      </div>
-    </div>
-    {% endfor %}
-
-  </div> -->
     </div><br>
     <footer style="background-color:#4040a1;" class="container-fluid text-center">
       <p style="font-family: 'Mukta', sans-serif; font-size: 18px; color:white; padding-top: 10px ">-Giraffe HackDavis
         2021-
       </p>
-      <!-- <form class="form-inline">Get deals:
-    <input type="email" class="form-control" size="50" placeholder="Email Address">
-    <button type="button" class="btn btn-danger">Sign Up</button>
-  </form> -->
     </footer>
 
     {% endblock %}
